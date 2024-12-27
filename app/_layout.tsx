@@ -8,9 +8,9 @@ export default function RootLayout() {
     "Rubik-bold": require("../assets/fonts/Rubik-Bold.ttf"),
     "Rubik-ExtraBold": require("../assets/fonts/Rubik-ExtraBold.ttf"),
     "Rubik-SemiBold": require("../assets/fonts/Rubik-SemiBold.ttf"),
-    "Rubik-regular": require("../assets/fonts/Rubik-Regular.ttf"),
-    "Rubik-medium": require("../assets/fonts/Rubik-Medium.ttf"),
-    "Rubik-light": require("../assets/fonts/Rubik-Light.ttf"),
+    "Rubik-Regular": require("../assets/fonts/Rubik-Regular.ttf"),
+    "Rubik-Medium": require("../assets/fonts/Rubik-Medium.ttf"),
+    "Rubik-Light": require("../assets/fonts/Rubik-Light.ttf"),
   });
 
   useEffect(() => {

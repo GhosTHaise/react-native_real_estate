@@ -34,7 +34,7 @@
         }
       ],
       [
-        "expo-fonts",
+        "expo-font",
         {
           "fonts": [
             "./assets/fonts/Rubik-Bold.ttf",

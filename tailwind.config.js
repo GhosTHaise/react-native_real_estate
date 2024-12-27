@@ -7,11 +7,11 @@ module.exports = {
     extend: {
       fontFamily : {
         rubik : ['Rubik-Regular', 'sans-serif'],
-        rubikBold : ['Rubik-Bold', 'sans-serif'],
-        rubikExtraBold : ['Rubik-ExtraBold', 'sans-serif'],
-        rubikSemiBold : ['Rubik-SemiBold', 'sans-serif'],
-        rubikMedium : ['Rubik-Medium', 'sans-serif'],
-        rubikLight : ['Rubik-Light', 'sans-serif'],
+        "rubik-bold" : ['Rubik-Bold', 'sans-serif'],
+        "rubik-extraBold" : ['Rubik-ExtraBold', 'sans-serif'],
+        "rubik-semiBold" : ['Rubik-SemiBold', 'sans-serif'],
+        "rubik-medium" : ['Rubik-Medium', 'sans-serif'],
+        "rubik-light" : ['Rubik-Light', 'sans-serif'],
       },
       colors: {
         primary: {
