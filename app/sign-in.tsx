@@ -1,16 +1,18 @@
 import icons from '@/constants/icons'
 import images from '@/constants/images'
 import { login } from '@/lib/appwrite'
+import { useGlobalContext } from '@/lib/globalProvider'
 import React from 'react'
 import { Alert, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 const SignIn = () => {
+  const { isLoggedin , refetch , loading } = useGlobalContext()
   const handleLogin = async() => {
     const result = await login();
 
     if(result){
-      console.log('Logged in');
+      refetch()
     } else {
       Alert.alert('Error', 'Failed to login');
     }

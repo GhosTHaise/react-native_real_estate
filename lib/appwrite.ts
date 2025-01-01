@@ -3,15 +3,15 @@ import * as Linking from "expo-linking"
 import {openAuthSessionAsync} from 'expo-web-browser';
 
 export const config = {
-    platform : 'com.ghost.restate',
+    platform : 'mg.ghost.restate',
     endpoint : process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT,
-    project : process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID,
+    projectId : process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID,
 }
 
 export const client = new Client();
 client
     .setEndpoint(config.endpoint!)
-    .setProject(config.project!)
+    .setProject(config.projectId!)
     .setPlatform(config.platform!);
 
 export const avatar = new Avatars(client);
@@ -21,7 +21,7 @@ export async function login() {
     try {
         const redirectUri = Linking.createURL('/');
         
-        const response = account.createOAuth2Token(OAuthProvider.Google, redirectUri);
+        const response = await account.createOAuth2Token(OAuthProvider.Google, redirectUri);
 
         if(!response) throw new Error('Failed to login');
 
@@ -30,14 +30,14 @@ export async function login() {
             redirectUri
         )
 
-        if(browserResult.type != 'success') throw new Error('Failed to login');
+        if(browserResult.type != 'success') throw new Error('Create OAuth2 token failed');
 
         const url = new URL(browserResult.url);
 
         const secret = url.searchParams.get('secret')?.toString();
-        const userId = url.searchParams.get('id')?.toString();
+        const userId = url.searchParams.get('userId')?.toString();
 
-        if(!secret || !userId) throw new Error('Failed to login');
+        if(!secret || !userId) throw new Error('Create OAuth2 token failed');
 
         const session = await account.createSession(userId, secret);
 
@@ -62,6 +62,7 @@ export async function logout() {
 
 export async function getCurrentUser() {
     try {
+        console.log("🚀 ~ getCurrentUser ~ account:", account)
         const response = await account.get();
 
         if(response.$id){
@@ -72,7 +73,9 @@ export async function getCurrentUser() {
                 avatar: userAvatar.toString(),
             }
         }
+        return null;
     } catch (error) {
-        console.log(error);
+        console.log("getCurrentUser error", error);
+        return null
     }
 }
