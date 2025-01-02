@@ -14,7 +14,7 @@ export default function AppLayout(){
         )
     }
 
-    if(!isLoggedin) return <Redirect href="/sign-in" />
+    /* if(!isLoggedin) return <Redirect href="/sign-in" /> */
 
     return <Slot />
 }
