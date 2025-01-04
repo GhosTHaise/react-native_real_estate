@@ -29,8 +29,6 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
 
     const isLoggedin = !!user;
 
-    console.log(JSON.stringify(user,null,2))
-
     return (
         <GlobalContext.Provider value={{
             isLoggedin,
