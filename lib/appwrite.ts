@@ -62,7 +62,6 @@ export async function logout() {
 
 export async function getCurrentUser() {
     try {
-        console.log("🚀 ~ getCurrentUser ~ account:", account)
         const response = await account.get();
 
         if(response.$id){

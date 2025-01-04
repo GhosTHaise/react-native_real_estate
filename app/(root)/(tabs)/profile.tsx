@@ -1,9 +1,11 @@
-import { View, Text, ScrollView, Image, TouchableOpacity, ImageSourcePropType } from 'react-native'
+import { View, Text, ScrollView, Image, TouchableOpacity, ImageSourcePropType, Alert } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import icons from '@/constants/icons';
 import images from '@/constants/images';
 import { settings } from '@/constants/data';
+import { useGlobalContext } from '@/lib/globalProvider';
+import { logout } from '@/lib/appwrite';
 
 interface SettingsItemProps {
   icon: ImageSourcePropType;
@@ -27,9 +29,16 @@ const SettingsItem = ({ icon, title, onPress, textStyle, showArrow = true }: Set
 )
 
 const Profile = () => {
+  const { user, refetch } = useGlobalContext();
+  const handleLogout = async () => {
+    const result = await logout();
 
-  const handleLogout = () => {
-
+    if (result) {
+      Alert.alert('Success', 'You have been logged out successfully');
+      refetch();
+    } else {
+      Alert.alert('Error', 'An error occurred while logging out');
+    }
   };
 
   return (
@@ -48,12 +57,14 @@ const Profile = () => {
 
         <View className='flex-row justify-center flex mt-5'>
           <View className='flex flex-col items-center relative mt-5'>
-            <Image source={images.avatar} className='size-44 relative rounded-full' />
-            <TouchableOpacity className='absolute bottom-11 right-2'>
-              <Image source={icons.edit} className='size-9' />
-            </TouchableOpacity>
+            <View className='relative'>
+              <Image source={{ uri: user?.avatar }} className='size-44 relative rounded-full' />
+              <TouchableOpacity className='absolute bottom-8 -right-3'>
+                <Image source={icons.edit} className='size-9' />
+              </TouchableOpacity>
+            </View>
 
-            <Text className='text-2xl font-rubik-bold mt-2'>Fitiavana | GhosT</Text>
+            <Text className='text-2xl font-rubik-bold mt-2'>{user?.name}</Text>
           </View>
         </View>
         <View className='flex flex-col mt-10'>
