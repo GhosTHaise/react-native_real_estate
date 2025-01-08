@@ -88,7 +88,7 @@ export async function getCurrentUser() {
 export async function getLatestProperties() {
     try {
         const result = await databases.listDocuments(
-            config.projectId!,
+            config.databaseId!,
             config.propertiesCollectionId!,
             [Query.orderAsc('$createdAt'), Query.limit(5)]
         )
@@ -114,7 +114,7 @@ export async function getProperties({ filter, query, limit }: { filter: string, 
         if (limit) buildQuery.push(Query.limit(limit));
 
         const result = await databases.listDocuments(
-            config.projectId!,
+            config.databaseId!,
             config.propertiesCollectionId!,
             buildQuery
         )

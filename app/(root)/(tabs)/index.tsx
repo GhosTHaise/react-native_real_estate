@@ -2,16 +2,39 @@ import FeaturedCard, { Card } from "@/components/cards";
 import Filters from "@/components/filters";
 import Search from "@/components/Search";
 import icons from "@/constants/icons";
+import { getLatestProperties, getProperties } from "@/lib/appwrite";
 import { useGlobalContext } from "@/lib/globalProvider";
-import {  FlatList, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { useAppwrite } from "@/lib/useApprwite";
+import { useLocalSearchParams } from "expo-router";
+import { useEffect } from "react";
+import { FlatList, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Index() {
   const { user } = useGlobalContext()
+  const params = useLocalSearchParams<{ query?: string, filter?: string }>();
+
+  const { data: latestProperties, loading: latestPropertiesLoading } = useAppwrite({ fn: getLatestProperties });
+  const { data : properties, loading, refetch } = useAppwrite({
+    fn: getProperties, params: {
+      filter: params.filter!,
+      query: params.query!,
+      limit: 6
+    },
+    skip: true
+  });
+
+  useEffect(() => {
+    refetch({
+      filter: params.filter!,
+      query: params.query!,
+      limit: 6
+    })
+  },[params.filter, params.query])
   return (
     <SafeAreaView className="h-full bg-white">
       <FlatList
-        data={[1, 2, 3, 4]}
+        data={properties}
         renderItem={({ item }) => <Card />}
         keyExtractor={(item) => item.toString()}
         numColumns={2}
@@ -22,7 +45,7 @@ export default function Index() {
           <View className="px-5">
             <View className="flex flex-row items-center justify-between mt-5">
               <View className="flex flex-row items-center">
-                <Image source={{uri : user?.avatar}} className="size-12 rounded-full" />
+                <Image source={{ uri: user?.avatar }} className="size-12 rounded-full" />
                 <View className="flex flex-col items-start ml-2 justify-center">
                   <Text className="text-xs font-rubik text-black-100">
                     Good Morning
@@ -48,8 +71,8 @@ export default function Index() {
                   </TouchableOpacity>
                 </View>
 
-                <FlatList 
-                  data={[1,2,3]}
+                <FlatList
+                  data={latestProperties}
                   renderItem={({ item }) => <FeaturedCard />}
                   keyExtractor={(item) => item.toString()}
                   horizontal
@@ -57,7 +80,7 @@ export default function Index() {
                   showsHorizontalScrollIndicator={false}
                   contentContainerClassName="flex gap-5 mt-5"
                 />
-                
+
               </View>
               <View className="flex flex-row items-center justify-between">
                 <Text className="text-xl font-rubik-bold text-black-300">
