@@ -5,7 +5,7 @@ import icons from "@/constants/icons";
 import { getLatestProperties, getProperties } from "@/lib/appwrite";
 import { useGlobalContext } from "@/lib/globalProvider";
 import { useAppwrite } from "@/lib/useApprwite";
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { useEffect } from "react";
 import { FlatList, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -23,6 +23,8 @@ export default function Index() {
     },
     skip: true
   });
+
+  const handleCardPress = (id: string) => router.push(`/properties/${id}`);
 
   useEffect(() => {
     refetch({
