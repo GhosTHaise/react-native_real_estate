@@ -103,7 +103,7 @@ export async function getLatestProperties() {
 export async function getProperties({ filter, query, limit }: { filter: string, query: string, limit?: number }) {
     try {
         const buildQuery = [Query.orderAsc('$createdAt')];
-        if (filter && filter !== 'all') buildQuery.push(Query.equal('type', filter));
+        if (filter && filter.toLocaleLowerCase() !== 'all') buildQuery.push(Query.equal('type', filter));
         if (query) buildQuery.push(Query.or(
             [
                 Query.search('name', query),
