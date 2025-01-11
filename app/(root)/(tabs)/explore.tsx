@@ -55,6 +55,8 @@ export default function Explore() {
               <Text className="text-base mr-2 text-center font-rubik-medium text-black-300">
                 Search for your Ideal Home
               </Text>
+
+              <Image source={icons.bell} className="size-6" />
             </View>
             <Search />
             <View className="mt-5">
